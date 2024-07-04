@@ -19,12 +19,13 @@ jobs:
     name: Base Test
     uses: otc-code/code-workflows/.github/workflows/workflow_test.yml@main
     secrets: inherit
-  # dev_aws:
-  #   name: AWS Test
-  #   uses: ./.github/workflows/test_cases.yml
-  #   secrets: inherit
-  #   with:
-  #     RUNNER: 'STATIC'
-  #     ENV: 'CODE-TST-AWS'
-  #     PROVIDER: 'aws'
-  #     DIR: 'iac-code/plain'
+  dev_aws:
+    name: AWS Test
+    if: ${{ github.event == 'pull_request' }}
+    uses: ./.github/workflows/test_cases.yml
+    secrets: inherit
+    with:
+      RUNNER: 'STATIC'
+      ENV: 'CODE-TST-AWS'
+      PROVIDER: 'aws'
+      DIR: 'iac-code/plain'
