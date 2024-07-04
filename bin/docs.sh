@@ -25,7 +25,7 @@ replace() {
 
 update_toc() {
 	MD_START="<!-- TOC -->"
-	MD_END="<!-- \/TOC -->"
+	MD_END="<!-- /TOC -->"
 	check_markers
 	TMP="$TMPDIR/toc.md"
 	echo "$MD_START" >$TMP
