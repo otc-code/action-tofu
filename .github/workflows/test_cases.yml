@@ -186,14 +186,14 @@ jobs:
           TF_ACTION: 'destroy'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Backend delete
-      #   if: ${{ inputs.PROVIDER == 'aws' }}
-      #   uses: ./
-      #   with:
-      #     TF_DIR: ${{ inputs.DIR }}
-      #     TF_ACTION: 'init'
-      #     TF_PARAMETER: 'autopilot=aws,region=eu-central-1'
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
-      #   env:
-      #     BACKEND_DESTROY: 'true'
+      - name: Backend delete
+        if: ${{ inputs.PROVIDER == 'aws' }}
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'init'
+          TF_PARAMETER: 'autopilot=aws,region=eu-west-1'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        env:
+          BACKEND_DESTROY: 'true'
