@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2016,SC2086,SC2154
+#shellcheck disable=SC1091,SC2016,SC2086,SC2154,SC2034
 SCRIPT_DIRECTORY=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
 backend_destroy_azr() {

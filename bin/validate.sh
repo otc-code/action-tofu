@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2086
+#shellcheck disable=SC1091,SC2086,SC2034
 validate() {
 	if [[ $TF_ACTION == "validate" ]]; then
 		echo -e "## validate ($(basename $TF_ROOT_DIR))\n" >>$STEP_SUM_MD

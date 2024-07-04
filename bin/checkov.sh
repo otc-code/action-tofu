@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2086,SC2129,SC2153
+#shellcheck disable=SC1091,SC2086,SC2129,SC2153,SC2034
 checkov_scan() {
 	if [[ $TF_ACTION == "checkov_scan" ]]; then
 		echo -e "## Checkov scan ($(basename $TF_ROOT_DIR))\n" >>$STEP_SUM_MD

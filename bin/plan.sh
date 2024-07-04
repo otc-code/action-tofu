@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2086,SC2126
+#shellcheck disable=SC1091,SC2086,SC2126,SC2034
 plan() {
 	# varfile=FILE, -refresh-only -target=resource -replace=resource -refresh=false -destroy
 	if [[ $TF_ACTION == "plan" ]]; then

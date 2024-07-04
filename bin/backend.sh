@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2086,SC2046
+#shellcheck disable=SC1091,SC2086,SC2046,SC2034
 SCRIPT_DIRECTORY=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 source "$SCRIPT_DIRECTORY/backend_aws.sh"
 source "$SCRIPT_DIRECTORY/backend_azr.sh"

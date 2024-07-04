@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2086,SC2086
+#shellcheck disable=SC1091,SC2086,SC2086,SC2129,SC2034
 source "$SCRIPT_DIRECTORY/backend.sh"
 source "$SCRIPT_DIRECTORY/functions.sh"
 function init() {

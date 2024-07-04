@@ -1,5 +1,5 @@
 #!/bin/bash
-#shellcheck disable=SC1091,SC2086,SC2129,SC2153
+#shellcheck disable=SC1091,SC2086,SC2129,SC2153,SC2034
 check_markers() {
 	if ! grep "$MD_START" "$MD_FILE" >/dev/null; then
 		echo -e "  ${INF}Update $TF_ACTION${NC}: $MD_START not found in $MD_FILE, skipping."
