@@ -14,12 +14,16 @@ permissions:
   id-token: write # This is required for requesting the JWT for oidc AUthentication
 
 jobs:
-  dev_aws:
+  base:
     name: Base Test
-    uses: ./.github/workflows/test_cases.yml
+    uses: otc-code/code-workflows/.github/workflows/workflow_test.yml@main
     secrets: inherit
-    with:
-      RUNNER: 'STATIC'
-      ENV: 'CODE-TST-AWS'
-      PROVIDER: 'aws'
-      DIR: 'iac-code/plain'
+  # dev_aws:
+  #   name: AWS Test
+  #   uses: ./.github/workflows/test_cases.yml
+  #   secrets: inherit
+  #   with:
+  #     RUNNER: 'STATIC'
+  #     ENV: 'CODE-TST-AWS'
+  #     PROVIDER: 'aws'
+  #     DIR: 'iac-code/plain'
