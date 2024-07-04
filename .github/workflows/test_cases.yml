@@ -177,7 +177,6 @@ jobs:
         with:
           TF_DIR: ${{ inputs.DIR }}
           TF_ACTION: 'apply'
-          #TF_PARAMETER: 'apply'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: destroy
@@ -185,7 +184,6 @@ jobs:
         with:
           TF_DIR: ${{ inputs.DIR }}
           TF_ACTION: 'destroy'
-          #TF_PARAMETER: 'apply'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # - name: Backend delete
