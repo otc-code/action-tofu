@@ -24,18 +24,18 @@ The `action-tofu` repository is a GitHub composite action designed to execute Te
 
 ## action.yml
 
-| Name                | Description                                                                                     | Required | Default                     |
-| ------------------- | ----------------------------------------------------------------------------------------------- | -------- | --------------------------- |
-| TF_DIR              | Relative path to IaC - terraform root dir                                                       | False    | None                        |
-| TF_ACTION           | Terraform Action to execute                                                                     | False    | ''                          |
-| TF_PARAMETER        | Parameters for the action to be executed                                                        | False    | ''                          |
-| DEBUG               | Enable debug output                                                                             | False    | 'false'                     |
-| GITHUB_TOKEN        | The Github Workflow token, for annotations & content changes.                                   | False    | None                        |
-| GITHUB_COM_TOKEN    | Token for accessing github.com to avoid rate limits / download from github private repositories | False    | None                        |
-| GH_ANNOTATIONS      | Enable GH Annotations                                                                           | False    | 'true'                      |
-| GH_STEP_SUMMARY     | Enable GITHUB_STEP_SUMMARY                                                                      | False    | 'true'                      |
-| GH_PR_COMMENTS      | Enable GH_PR_COMMENTS for steps                                                                 | False    | 'true'                      |
-| GH_HOST             | GitHub Enterprise hostname when not running on github.com                                       | False    | 'github.com'                |
-| GITHUB_API          | The Github API URL for reviewdog                                                                | False    | '<https://api.github.com/>' |
-| GH_ENTERPRISE_TOKEN | Token for accessing github enterprise with gh cli & git                                         | False    | None                        |
-| DRY_RUN             | Only dry run without real changes.                                                              | False    | 'false'                     |
+| Name                | Description                                                                                     | Required | Default                  |
+| ------------------- | ----------------------------------------------------------------------------------------------- | -------- | ------------------------ |
+| TF_DIR              | Relative path to IaC - terraform root dir                                                       | False    | `None`                   |
+| TF_ACTION           | Terraform Action to execute                                                                     | False    | `''`                     |
+| TF_PARAMETER        | Parameters for the action to be executed                                                        | False    | `''`                     |
+| DEBUG               | Enable debug output                                                                             | False    | `false`                  |
+| GITHUB_TOKEN        | The Github Workflow token, for annotations & content changes.                                   | False    | None                     |
+| GITHUB_COM_TOKEN    | Token for accessing github.com to avoid rate limits / download from github private repositories | False    | None                     |
+| GH_ANNOTATIONS      | Enable GH Annotations                                                                           | False    | `true`                   |
+| GH_STEP_SUMMARY     | Enable GITHUB_STEP_SUMMARY                                                                      | False    | `true`                   |
+| GH_PR_COMMENTS      | Enable GH_PR_COMMENTS for steps                                                                 | False    | `true`                   |
+| GH_HOST             | GitHub Enterprise hostname when not running on github.com                                       | False    | `github.com`             |
+| GITHUB_API          | The Github API URL for reviewdog                                                                | False    | `https://api.github.com` |
+| GH_ENTERPRISE_TOKEN | Token for accessing github enterprise with gh cli & git                                         | False    | None                     |
+| DRY_RUN             | Only dry run without real changes.                                                              | False    | `false`                  |
