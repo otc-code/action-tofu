@@ -1,0 +1,9 @@
+framework: all
+skip-download: false
+soft-fail: true
+summary-position: bottom
+download-external-modules: false
+secrets-history-timeout: 8h
+skip-check:
+  - CKV_TF_1 # OTC-Code Modules are versioned from a trusted source
+

@@ -1,0 +1,27 @@
+# Test Example
+
+<!-- BEGIN_TOC -->
+<!-- END_TOC -->
+
+
+# Usage
+
+## Overview
+This is only an Example
+
+## Examples
+Her should the example go!
+
+# Automated documentation
+
+<!-- BEGIN_TF_DOCS -->
+<!-- END_TF_DOCS -->
+
+<!-- BEGIN_CHECKOV -->
+<!-- END_CHECKOV -->
+
+ <!-- BEGIN_KICS -->
+ <!-- END_KICS -->
+
+<!-- BEGIN_PIKE_DOCS -->
+<!-- END_PIKE_DOCS -->

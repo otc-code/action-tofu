@@ -1,0 +1,76 @@
+name: 'Composite Action for OpenTofu'
+description: 'Action to use IaC Code in Github Actions with OpenTofu, ready for the enterprise'
+
+inputs:
+  TF_DIR:
+    description: 'relative path to IaC - terraform root dir'
+    required: false
+  TF_ACTION:
+    description: 'Terraform Action to execute'
+    required: false
+    default: ''
+  TF_PARAMETER:
+    description: 'Parameters for the action to be executed'
+    required: false
+    default: ''
+  DEBUG:
+    description: 'Enable debug output'
+    required: false
+    default: 'false'
+  GITHUB_TOKEN:
+    description: 'The Github Workflow token, for annotations & content changes.'
+    required: false
+  GITHUB_COM_TOKEN:
+    description: 'Token for accessing github.com to avoid rate limits / download from github private repositories'
+    required: false
+  GH_ANNOTATIONS:
+    description: 'Enable GH Annotations'
+    required: false
+    default: 'true'
+  GH_STEP_SUMMARY:
+    description: 'Enable GITHUB_STEP_SUMMARY'
+    required: false
+    default: 'true'
+  GH_PR_COMMENTS:
+    description: 'Enable GH_PR_COMMENTS for steps'
+    required: false
+    default: 'true'
+  GH_HOST:
+    description: "GitHub Enterprise hostname when not running on github.com"
+    required: false
+    default: 'github.com'
+  GITHUB_API:
+    description: 'The Github API URL for reviewdog'
+    required: false
+    default: 'https://api.github.com/'
+  GH_ENTERPRISE_TOKEN:
+    description: 'Token for accessing github enterprise with gh cli & git'
+    required: false
+  DRY_RUN:
+    description: 'Only dry run without real changes.'
+    required: false
+    default: 'false'
+
+runs:
+  using: "composite"
+  steps:
+    - name: terraform Action
+      run: "bash ${{ github.action_path }}/bin/tf.sh"
+      shell: bash
+      env:
+        DEBUG:      ${{ inputs.DEBUG }}
+        TF_DIR:    ${{ inputs.TF_DIR }}
+        TF_ACTION:  ${{ inputs.TF_ACTION }}
+        TF_PARAMETER: ${{ inputs.TF_PARAMETER }}
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
+        GITHUB_COM_TOKEN: ${{ inputs.GITHUB_COM_TOKEN }}
+        GH_ANNOTATIONS: ${{ inputs.GH_ANNOTATIONS }}
+        GH_STEP_SUMMARY: ${{ inputs.GH_STEP_SUMMARY }}
+        GH_PR_COMMENTS: ${{ inputs.GH_PR_COMMENTS }}
+        DRY_RUN: ${{ inputs.DRY_RUN }}
+        REVIEWDOG_GITHUB_API_TOKEN: ${{ inputs.GITHUB_TOKEN }} # needed for annotation & PR comments
+        GH_PR_ANNOTATIONS: ${{ inputs.GH_PR_ANNOTATIONS }}
+        GH_HOST: ${{ inputs.GH_HOST }} # needed for gh cli & GH Enterprise
+        GITHUB_API: ${{ inputs.GITHUB_API }} # needed for reviewdog PR comments
+        GH_ENTERPRISE_TOKEN: ${{ inputs.GH_ENTERPRISE_TOKEN }} # needed for gh cli & to configure auth in gitconfig
+

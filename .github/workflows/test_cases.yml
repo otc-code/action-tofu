@@ -1,0 +1,201 @@
+name: Reusable Tests Cases
+on:
+  workflow_call:
+    inputs:
+      PROVIDER:
+        required: true
+        type: string
+      ENV:
+        required: true
+        type: string
+      RUNNER:
+        required: true
+        type: string
+      DIR:
+        required: true
+        type: string
+jobs:
+  action_tests:
+    runs-on: ${{ inputs.RUNNER }}
+    name: Test ${{ inputs.PROVIDER }}
+    environment: ${{ inputs.ENV }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Info
+        uses: ./
+        with:
+          TF_ACTION: 'info'
+          TF_DIR: ${{ inputs.DIR }}
+          DEBUG: 'DEBUG'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check & Install tools
+        uses: ./
+        with:
+          TF_ACTION: 'install'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        env:
+#          FORCE_INSTALL: 'true'
+#
+#      - name: tofu fmt
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'fmt'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: tofu init (nobackend)
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'init'
+#          TF_PARAMETER: 'nobackend'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+#      - name: tofu validate
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'validate'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: tflint
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'lint'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: tf_docs
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'tf_docs'
+#          #TF_PARAMETER: 'apply'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: pike_docs
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'pike_docs'
+#          #TF_PARAMETER: 'apply'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: checkov
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'checkov_scan'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: kics
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'kics_scan'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: update_toc
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'update_toc'
+#          #TF_PARAMETER: 'apply'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Static Checks & Docs
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'static_checks'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+
+      - name: Configure AWS Credentials (OIDC)
+        if: ${{ inputs.PROVIDER == 'aws' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.TST_OIDC_AWS_ASSUME_ROLE_ARN }}
+          aws-region: 'eu-central-1'
+
+      - name: tofu init (no remote backend)
+        if: ${{ inputs.PROVIDER == 'none' }}
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'init'
+          TF_PARAMETER: ''
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+
+
+      - name: tofu init (autopilot AWS)
+        if: ${{ inputs.PROVIDER == 'aws' }}
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'init'
+          TF_PARAMETER: 'autopilot=aws,region=eu-central-1'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        env:
+          BACKEND_DESTROY: 'false'
+
+      - name: plan
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'plan'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: checkov plan
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'checkov_scan'
+          TF_PARAMETER: 'plan'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: apply
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'apply'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: plan destroy
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'plan'
+          TF_PARAMETER: 'plan_destroy'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: apply (destroy plan)
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'apply'
+          #TF_PARAMETER: 'apply'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: destroy
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'destroy'
+          #TF_PARAMETER: 'apply'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Backend delete
+        if: ${{ inputs.PROVIDER == 'aws' }}
+        uses: ./
+        with:
+          TF_DIR: ${{ inputs.DIR }}
+          TF_ACTION: 'init'
+          TF_PARAMETER: 'autopilot=aws,region=eu-central-1'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+        env:
+          BACKEND_DESTROY: 'true'

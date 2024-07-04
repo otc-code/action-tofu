@@ -1,0 +1,26 @@
+name: Action OpenTofu Tests
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+permissions:
+  # required for all workflows
+  contents: write
+  checks: write
+  pull-requests: write
+  discussions: write
+  statuses: write
+  id-token: write # This is required for requesting the JWT for oidc AUthentication
+
+jobs:
+  dev_aws:
+    name: AutomatedTests
+    uses: ./.github/workflows/test_cases.yml
+    secrets: inherit
+    with:
+      RUNNER: 'STATIC'
+      ENV: 'CODE-TST-AWS'
+      PROVIDER: 'aws'
+      DIR: 'iac-code/plain'
+
