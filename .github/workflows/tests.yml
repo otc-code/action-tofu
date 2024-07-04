@@ -21,7 +21,7 @@ jobs:
     secrets: inherit
   dev_aws:
     name: AWS Test
-    if: ${{ github.event == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' }}
     uses: ./.github/workflows/test_cases.yml
     secrets: inherit
     with:
