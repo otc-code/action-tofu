@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   dev_aws:
-    name: AutomatedTests
+    name: Base Test
     uses: ./.github/workflows/test_cases.yml
     secrets: inherit
     with:
@@ -23,4 +23,3 @@ jobs:
       ENV: 'CODE-TST-AWS'
       PROVIDER: 'aws'
       DIR: 'iac-code/plain'
-
