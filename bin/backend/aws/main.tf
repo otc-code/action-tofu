@@ -11,7 +11,7 @@ resource "aws_s3_bucket" "state" {
   bucket        = var.s3_bucket_name
   force_destroy = true
   tags = {
-    Name = "${var.s3_bucket_name}-s3"
+    Name       = "${var.s3_bucket_name}-s3"
     Managed_by = "CI/CD: ${var.workflow}"
   }
 }
@@ -45,11 +45,9 @@ locals {
 
 resource "aws_dynamodb_table" "lock" {
   #checkov:skip=CKV_AWS_119: DynabamoDB table only contains locks, so no encryption necessary
-  name           = var.dynamodb_table_name
-  hash_key       = local.lock_key_id
-  read_capacity  = 1
-  write_capacity = 1
-  billing_mode   = "PAY_PER_REQUEST"
+  name         = var.dynamodb_table_name
+  hash_key     = local.lock_key_id
+  billing_mode = "PAY_PER_REQUEST"
   attribute {
     name = local.lock_key_id
     type = "S"
@@ -59,7 +57,7 @@ resource "aws_dynamodb_table" "lock" {
     enabled = true
   }
   tags = {
-    Name = "${var.dynamodb_table_name}-dynamodb"
+    Name       = "${var.dynamodb_table_name}-dynamodb"
     Managed_by = "CI/CD: ${var.workflow}"
   }
 }
