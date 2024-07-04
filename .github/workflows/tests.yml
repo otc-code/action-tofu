@@ -13,6 +13,7 @@ permissions:
   statuses: write
   id-token: write # This is required for requesting the JWT for oidc AUthentication
 
+
 jobs:
   base:
     name: Base Test
