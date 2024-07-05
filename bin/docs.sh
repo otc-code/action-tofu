@@ -24,7 +24,6 @@ replace() {
 }
 
 update_toc() {
-	git pull
 	MD_START="<!-- BEGIN_TOC -->"
 	MD_END="<!-- END_TOC -->"
 	check_markers
