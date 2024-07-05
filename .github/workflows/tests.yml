@@ -15,6 +15,10 @@ permissions:
   discussions: write
   statuses: write
   id-token: write # This is required for requesting the JWT for oidc AUthentication
+# Ensures that only one deploy task run at a time.
+
+concurrency:
+  group: tests
 
 
 jobs:
