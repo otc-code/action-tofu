@@ -8,6 +8,8 @@ The `action-tofu` repository is a GitHub composite action designed to execute Te
 
 <!-- END_TOC -->
 
+# Overview
+
 ## Files
 
 | file                | description                                                                                                                                                                                                                                                                                                                                                                                  |
