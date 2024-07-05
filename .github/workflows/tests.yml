@@ -2,6 +2,8 @@ name: Action OpenTofu Tests
 on:
   workflow_dispatch:
   push:
+        paths:
+          - ! '**.md'
   pull_request:
 
 permissions:
