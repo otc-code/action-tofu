@@ -4,6 +4,12 @@
 
 The `action-tofu` repository is a GitHub composite action designed to execute Terraform IaC operations in an enterprise-style environment. It provides various scripts and tools to manage infrastructure deployments, including backend configurations for AWS and Azure, static analysis with Checkov, documentation generation, and code formatting. This action can be used in GitHub Actions workflows to automate Terraform deployments, validate configurations, and generate reports, making it a valuable tool for DevOps teams and enterprise environments.
 
+<!-- BEGIN_TOC -->
+
+<!-- END_TOC -->
+
+## Files
+
 | file                | description                                                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | action.yml          | The 'action.yml' file defines a composite GitHub Action designed to execute Terraform IaC operations, offering various inputs and configurations for customization within GitHub Actions workflows.                                                                                                                                                                                          |
