@@ -14,7 +14,7 @@ apply() {
 			echo "  varfile: apply with -var-file="
 			echo "  target: apply with -target="
 			echo "  replace: apply with -replace="
-			echo "  norefresh: appy with -refresh=false"
+			echo "  norefresh: apply with -refresh=false"
 			echo "  apply_destroy: apply with -destroy"
 			;;
 		target) APPLY_CMD="$APPLY_CMD-target=${parameter##*=} " ;;
@@ -52,7 +52,7 @@ apply() {
 		APPLY_CMD="$APPLY_CMD $TF_ROOT_DIR/plan.out"
 	fi
 	if [[ $TF_ACTION == "apply" ]]; then
-		echo -e "## appy\n" >>$STEP_SUM_MD
+		echo -e "## apply\n" >>$STEP_SUM_MD
 		echo -e "Parameter: $TF_PARAMETER\n" >>$STEP_SUM_MD
 	fi
 	echo -e "  $TF_ACTION: ${INF}$APPLY_CMD${NC}"

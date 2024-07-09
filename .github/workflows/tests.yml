@@ -2,8 +2,9 @@ name: Action OpenTofu Tests
 on:
   workflow_dispatch:
   push:
-        paths:
-          - ! '**.md'
+    paths:
+      - '**.sh'
+      - '**.yml'
   pull_request:
 
 permissions:
@@ -14,6 +15,10 @@ permissions:
   discussions: write
   statuses: write
   id-token: write # This is required for requesting the JWT for oidc AUthentication
+# Ensures that only one deploy task run at a time.
+
+concurrency:
+  group: tests
 
 
 jobs:
