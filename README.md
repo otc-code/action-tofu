@@ -3,21 +3,21 @@
 [![LOGO](images/logo.png)](#)
 
 <!-- BEGIN_TOC -->
+
 ## Table of Contents
 
-- [action-tofu (A Github composite action for running tofu in enterprise style)](#action-tofu-a-github-composite-action-for-running-tofu-in-enterprise-style)
-- [Overview](#overview)
-  - [Usage](#usage)
-- [Details](#details)
-- [Files](#files)
-  - [action.yml](#actionyml)
-    - [Purpose](#purpose)
-    - [Key Components](#key-components)
-    - [Detailed Configuration](#detailed-configuration)
-    - [Usage](#usage)
-  - [Other files](#other-files)
-  - [Files](#files)
-<!-- END_TOC -->
+-   [action-tofu (A Github composite action for running tofu in enterprise style)](#action-tofu-a-github-composite-action-for-running-tofu-in-enterprise-style)
+-   [Overview](#overview)
+    -   [Usage](#usage)
+-   [Details](#details)
+-   [Files](#files)
+    -   [action.yml](#actionyml)
+        -   [Purpose](#purpose)
+        -   [Key Components](#key-components)
+        -   [Detailed Configuration](#detailed-configuration)
+        -   [Usage](#usage)
+    -   [Other files](#other-files)
+        <!-- END_TOC -->
 
 # Overview
 
@@ -150,8 +150,6 @@ The action is configured to handle various aspects of a Terraform workflow, incl
 This action file is intended to be used in conjunction with other GitHub Actions workflows, where it provides a modular way to include Terraform execution as part of the CI/CD pipeline. It simplifies configuration and management of Terraform operations within enterprise environments by leveraging GitHub's ecosystem effectively.
 
 ## Other files
-
-## Files
 
 | file                | description                                                                                                                                                                                                                                                                                                                                                                                  |
 | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
