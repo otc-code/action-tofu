@@ -3,7 +3,18 @@
 [![LOGO](images/logo.png)](#)
 
 <!-- BEGIN_TOC -->
+## Table of Contents
 
+- [action-tofu (A Github composite action for running tofu in enterprise style)](#action-tofu-a-github-composite-action-for-running-tofu-in-enterprise-style)
+- [Overview](#overview)
+- [Details](#details)
+- [Files](#files)
+  - [action.yml](#actionyml)
+    - [Purpose](#purpose)
+    - [Key Components](#key-components)
+    - [Detailed Configuration](#detailed-configuration)
+    - [Usage](#usage)
+- [Automated docs](#automated-docs)
 <!-- END_TOC -->
 
 # Overview
