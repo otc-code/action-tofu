@@ -68,7 +68,7 @@ function static_checks() {
 	else
 		TF_PARAMETER=recursive fmt
 	fi
-	set_auth_header
+
 	TF_PARAMETER=nobackend init
 	validate
 	lint
