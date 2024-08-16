@@ -1,0 +1,27 @@
+name: Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'version.json' # Needed as this file is modifed by release workflow!
+# Ensures that only one deploy task run at a time.
+concurrency:
+  group: release
+
+permissions:
+  # required for all workflows
+  contents: write
+  checks: write
+  pull-requests: write
+  discussions: write
+  statuses: write
+  id-token: write # This is required for requesting the JWT for oidc AUthentication
+
+# Run Tests
+jobs:
+  base:
+    name: Release Workflow
+    uses: otc-code/code-workflows/.github/workflows/otc-release.yml@main
+    secrets: inherit

@@ -2,6 +2,8 @@
 
 [![LOGO](images/logo.png)](#)
 
+[![Action OpenTofu Tests](https://github.com/otc-code/action-tofu/actions/workflows/tests.yml/badge.svg)](https://github.com/otc-code/action-tofu/actions/workflows/tests.yml)
+
 <!-- BEGIN_TOC -->
 
 ## Table of Contents
