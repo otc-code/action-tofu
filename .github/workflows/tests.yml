@@ -33,6 +33,6 @@ jobs:
     secrets: inherit
     with:
       RUNNER: 'STATIC'
-      ENV: 'CODE-TST-AWS'
+      ENV: 'otc-code-tst'
       PROVIDER: 'aws'
       DIR: 'iac-code/plain'
