@@ -81,34 +81,40 @@ function rewrite_backend_config() {
 }
 
 function autocreate() {
-  	echo $CREATE
-  	case $CREATE in
-  	azr_backend_file) 		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
-                      		if [[ -z "$BACKEND_FILE" ]]; then
-                      			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
-                      			exit_on_error
-                      		fi
-                      		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
-                      		$CREATE ;;
-  	aws_backend_file) 		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
-                      		if [[ -z "$BACKEND_FILE" ]]; then
-                      			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
-                      			exit_on_error
-                      		fi
-                      		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
-                      		$CREATE ;;
-  	consul_backend_file) echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
-                                               		if [[ -z "$BACKEND_FILE" ]]; then
-                                               			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
-                                               			exit_on_error
-                                               		fi
-                                               		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE") ;;
-  	*)
-	echo -e "${ERR}AutoCreate${NC}: Provider $PROVIDER is not supported."
+	echo $CREATE
+	case $CREATE in
+	azr_backend_file)
+		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
+		if [[ -z "$BACKEND_FILE" ]]; then
+			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
+			exit_on_error
+		fi
+		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
+		$CREATE
+		;;
+	aws_backend_file)
+		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
+		if [[ -z "$BACKEND_FILE" ]]; then
+			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
+			exit_on_error
+		fi
+		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
+		$CREATE
+		;;
+	consul_backend_file)
+		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
+		if [[ -z "$BACKEND_FILE" ]]; then
+			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
+			exit_on_error
+		fi
+		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
+		;;
+	*)
+		echo -e "${ERR}AutoCreate${NC}: Provider $PROVIDER is not supported."
 		ERROR=true
 		clean_exit
-  		;;
-  	esac
+		;;
+	esac
 }
 
 function autopilot() {
