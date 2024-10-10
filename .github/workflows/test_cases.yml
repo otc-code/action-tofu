@@ -112,88 +112,98 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
 
-      - name: Configure AWS Credentials (OIDC)
-        if: ${{ inputs.PROVIDER == 'aws' }}
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.TST_OIDC_AWS_ASSUME_ROLE_ARN }}
-          aws-region: 'eu-central-1'
+#      - name: Configure AWS Credentials (OIDC)
+#        if: ${{ inputs.PROVIDER == 'aws' }}
+#        uses: aws-actions/configure-aws-credentials@v4
+#        with:
+#          role-to-assume: ${{ secrets.TST_OIDC_AWS_ASSUME_ROLE_ARN }}
+#          aws-region: 'eu-central-1'
+#
+#      - name: tofu init (no remote backend)
+#        if: ${{ inputs.PROVIDER == 'none' }}
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'init'
+#          TF_PARAMETER: ''
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
 
-      - name: tofu init (no remote backend)
-        if: ${{ inputs.PROVIDER == 'none' }}
+
+#      - name: tofu init (autopilot AWS)
+#        if: ${{ inputs.PROVIDER == 'aws' }}
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'init'
+#          TF_PARAMETER: 'autopilot=aws,region=eu-central-1'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+#        env:
+#          BACKEND_DESTROY: 'false'
+      - name: tofu init (autopilot Consul)
+        if: ${{ inputs.PROVIDER == 'ldc' }}
         uses: ./
         with:
           TF_DIR: ${{ inputs.DIR }}
           TF_ACTION: 'init'
-          TF_PARAMETER: ''
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
-
-
-      - name: tofu init (autopilot AWS)
-        if: ${{ inputs.PROVIDER == 'aws' }}
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'init'
-          TF_PARAMETER: 'autopilot=aws,region=eu-central-1'
+          TF_PARAMETER: 'autopilot=consul,region=datacenter'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
         env:
           BACKEND_DESTROY: 'false'
+#      - name: plan
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'plan'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: checkov plan
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'checkov_scan'
+#          TF_PARAMETER: 'plan'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: apply
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'apply'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: plan
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'plan'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: checkov plan
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'checkov_scan'
-          TF_PARAMETER: 'plan'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: apply
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'apply'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: plan destroy
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'plan'
-          TF_PARAMETER: 'plan_destroy'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: apply (destroy plan)
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'apply'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: destroy
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'destroy'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Backend delete
-        if: ${{ inputs.PROVIDER == 'aws' }}
-        uses: ./
-        with:
-          TF_DIR: ${{ inputs.DIR }}
-          TF_ACTION: 'init'
-          TF_PARAMETER: 'autopilot=aws,region=eu-west-1'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
-        env:
-          BACKEND_DESTROY: 'true'
+#      - name: plan destroy
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'plan'
+#          TF_PARAMETER: 'plan_destroy'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: apply (destroy plan)
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'apply'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: destroy
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'destroy'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#
+#      - name: Backend delete
+#        if: ${{ inputs.PROVIDER == 'aws' }}
+#        uses: ./
+#        with:
+#          TF_DIR: ${{ inputs.DIR }}
+#          TF_ACTION: 'init'
+#          TF_PARAMETER: 'autopilot=aws,region=eu-west-1'
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
+#        env:
+#          BACKEND_DESTROY: 'true'
