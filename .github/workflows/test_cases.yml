@@ -152,6 +152,7 @@ jobs:
           GITHUB_COM_TOKEN: ${{ secrets.ORG_ADMIN_TOKEN }}
         env:
           BACKEND_DESTROY: 'false'
+          CONSUL_HTTP_ADDR: ${{ secrets.CONSUL_HTTP_ADDR }}
 #      - name: plan
 #        uses: ./
 #        with:
