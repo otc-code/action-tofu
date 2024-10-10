@@ -38,7 +38,7 @@ jobs:
 #      DIR: 'iac-code/plain'
   dev_ldc:
     name: LDC Test
-    if: ${{ github.event_name == 'pull_request' }}
+    #if: ${{ github.event_name == 'pull_request' }}
     uses: ./.github/workflows/test_cases.yml
     secrets: inherit
     with:
