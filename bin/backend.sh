@@ -44,18 +44,21 @@ key                  = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
 EOT
 }
 
+function consul_backend_file() {
+  cat >$TMPDIR/auto.tfbackend <<EOT
+  key                  = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
+EOT
+}
+
 function rewrite_backend_config() {
-	if [[ "$PROVIDER" == "aws" ]]; then
-		local provider_backend="backend \"s3\" {}"
-	else
-		if [[ "$PROVIDER" == "azr" ]]; then
-			local provider_backend="backend \"azurerm\" {}"
-		else
-			echo -e "${ERR}Backend${NC}: Provider $PROVIDER not supported!"
+  case $PROVIDER in
+  aws) local provider_backend="backend \"s3\" {}" ;;
+  azr) local provider_backend="backend \"azurerm\" {}" ;;
+  consul)local provider_backend="backend \"consul\" {}" ;;
+	*)	echo -e "${ERR}Backend${NC}: Provider $PROVIDER not supported!"
 			ERROR=true
-			clean_exit
-		fi
-	fi
+			clean_exit ;;
+esac
 	if ! grep -n "$provider_backend" $TF_ROOT_DIR/*.tf &>/dev/null; then
 		echo -e "  Backend: No ${INF}$provider_backend${NC} found in terraform files, try to rewrite local!"
 		if grep -n 'backend "local" {}' $TF_ROOT_DIR/*.tf &>/dev/null; then
@@ -88,7 +91,7 @@ function autocreate() {
 }
 
 function autopilot() {
-	if [[ "$CREATE" == "azr_backend_file" ]] || [[ "$CREATE" == "aws_backend_file" ]]; then
+	if [[ "$CREATE" == "azr_backend_file" ]] || [[ "$CREATE" == "aws_backend_file" ]] || [[ "$CREATE" == "consul_backend_file" ]]; then
 		$CREATE
 		echo "✓ Created backend file:" >>$STEP_SUM_MD
 		echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
