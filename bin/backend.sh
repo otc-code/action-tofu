@@ -93,7 +93,7 @@ function autocreate() {
 }
 
 function autopilot() {
-  echo $CREATE
+	echo $CREATE
 	if [[ "$CREATE" == "azr_backend_file" ]] || [[ "$CREATE" == "aws_backend_file" ]] || [[ "$CREATE" == "consul_backend_file" ]]; then
 		$CREATE
 		echo "✓ Created backend file:" >>$STEP_SUM_MD
