@@ -50,8 +50,8 @@ function consul_backend_file() {
 	cat >$TMPDIR/auto.tfbackend <<EOT
   key                  = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
 EOT
-		echo "✓ Created backend file:" >>$STEP_SUM_MD
-		echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
+	echo "✓ Created backend file:" >>$STEP_SUM_MD
+	echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
 }
 
 function rewrite_backend_config() {
