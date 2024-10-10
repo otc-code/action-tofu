@@ -103,6 +103,7 @@ function autopilot() {
 *) echo -e "${ERR}AutoPilot${NC}: Provider $PROVIDER is not supported."
   		ERROR=true
   		clean_exit
+  		;;
 esac
 
 	if [[ "$DRY_RUN" == "false" ]]; then
