@@ -42,6 +42,8 @@ storage_account_name = "tfestate$ID"
 container_name       = "tfe-tfstate"
 key                  = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
 EOT
+		echo "✓ Created backend file:" >>$STEP_SUM_MD
+		echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
 }
 
 function consul_backend_file() {
@@ -94,15 +96,15 @@ function autocreate() {
 
 function autopilot() {
   echo $CREATE
-	if [[ "$CREATE" == "azr_backend_file" ]] || [[ "$CREATE" == "aws_backend_file" ]] || [[ "$CREATE" == "consul_backend_file" ]]; then
-		$CREATE
-		echo "✓ Created backend file:" >>$STEP_SUM_MD
-		echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
-	else
-		echo -e "${ERR}AutoPilot${NC}: Provider $PROVIDER is not supported."
-		ERROR=true
-		clean_exit
-	fi
+  case $CREATE in
+  azr_backend_file) $CREATE;;
+  aws_backend_file) $CREATE;;
+  consul_backend_file) $CREATE ;;
+*) echo -e "${ERR}AutoPilot${NC}: Provider $PROVIDER is not supported."
+  		ERROR=true
+  		clean_exit
+esac
+
 	if [[ "$DRY_RUN" == "false" ]]; then
 		echo -e "  AutoPilot: Check and configure ${INF}$PROVIDER${NC} backend."
 		BACKEND_FILE=$TMPDIR/auto.tfbackend
