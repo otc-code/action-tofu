@@ -83,7 +83,7 @@ function rewrite_backend_config() {
 function autocreate() {
 	echo $CREATE
 	case $CREATE in
-	azr_backend_file)
+	backend_config_azr)
 		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
 		if [[ -z "$BACKEND_FILE" ]]; then
 			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
@@ -92,7 +92,7 @@ function autocreate() {
 		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
 		$CREATE
 		;;
-	aws_backend_file)
+	backend_config_aws)
 		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
 		if [[ -z "$BACKEND_FILE" ]]; then
 			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
@@ -101,7 +101,7 @@ function autocreate() {
 		eval $(sed -r '/[^=]+=[^=]+/!d;s/\s+=\s/=/g' "$BACKEND_FILE")
 		$CREATE
 		;;
-	consul_backend_file)
+	backend_config_consul)
 		echo -e "  AutoCreate${NC}: Check & create ${INF}$BACKEND_FILE${NC} in $REGION."
 		if [[ -z "$BACKEND_FILE" ]]; then
 			echo -e "${ERR}AutoCreate${NC}: No terraform backend config file provided. Abort"
