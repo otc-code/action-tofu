@@ -68,7 +68,7 @@ apply() {
 	else
 		echo -e "${ERR}$TFE $TF_ACTION${NC}: apply failed."
 		echo -e "✗ $TFE apply: Terraform apply not successfull!" >>$STEP_SUM_MD
-
+		ERROR=true
 		exit_on_error
 	fi
 }
