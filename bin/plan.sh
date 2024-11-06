@@ -54,6 +54,19 @@ plan() {
 		cat $TF_ROOT_DIR/plan.json | tf-summarize
 		echo -e "✓ Plan summary:\n" >>$STEP_SUM_MD
 		cat $TF_ROOT_DIR/plan.json | tf-summarize -md >>$STEP_SUM_MD
+    # Full plan output in action
+    hr
+    echo -e "✓ Full plan:"
+    $TFE -chdir=$TF_ROOT_DIR show $TF_ROOT_DIR/plan.out
+    hr
+    # Add full plan to step summary / PR Summary
+    echo -e "✓ Plan Details:\n" >>$STEP_SUM_MD
+    echo -e "<details>\n" >>$STEP_SUM_MD
+    echo -e "<summary>Details of $TFE plan</summary>\n" >>$STEP_SUM_MD
+    echo -e "\`\`\`console\n" >>$STEP_SUM_MD
+    $TFE -chdir=$TF_ROOT_DIR show $TF_ROOT_DIR/plan.out -no-color >$TF_ROOT_DIR/plan.txt
+    cat $TF_ROOT_DIR/plan.txt >>$STEP_SUM_MD
+    echo -e "\`\`\`\n</details>\n" >>$STEP_SUM_MD
 		# We need to strip the single quotes that are wrapping it so we can parse it with JQ
 		plan=$(cat $TF_ROOT_DIR/plan.json | sed "s/^'//g" | sed "s/'$//g")
 		# Get the count of the number of resources being created
