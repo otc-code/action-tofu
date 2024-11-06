@@ -91,22 +91,22 @@ backend_config_azr() {
 		echo -e "${OK}Backend${NC}: AZR Remote backend created & ready to use."
 		echo "✓ AZR Remote backend created & ready to use." >>$STEP_SUM_MD
 	else
-	  		if [[ $UPDATE_BACKEND == true ]]; then
-    			if terraform -chdir=$TF_ROOT_DIR plan -out=$PLAN_FILE -input=false 1>>$STDLOG 2>>$ERRLOG; then
-    				echo -e "${OK}Update Backend${NC}: Plan successfull."
-    				terraform -chdir=$TF_ROOT_DIR show $PLAN_FILE
-    			else
-    				echo -e "${ERR}Update Backend${NC}: failed to plan backend."
-    				exit_on_error
-    			fi
-    			echo -e "  Update Backend: ${INF}Apply Plan${NC}"
-    			if terraform -chdir=$TF_ROOT_DIR apply $PLAN_FILE; then
-    				echo -e "${OK}Update Backend${NC}: apply successfull."
-    			else
-    				echo -e "${ERR}Update Backend${NC}: failed to apply backend."
-    				exit_on_error
-    			fi
-    		fi
+		if [[ $UPDATE_BACKEND == true ]]; then
+			if terraform -chdir=$TF_ROOT_DIR plan -out=$PLAN_FILE -input=false 1>>$STDLOG 2>>$ERRLOG; then
+				echo -e "${OK}Update Backend${NC}: Plan successfull."
+				terraform -chdir=$TF_ROOT_DIR show $PLAN_FILE
+			else
+				echo -e "${ERR}Update Backend${NC}: failed to plan backend."
+				exit_on_error
+			fi
+			echo -e "  Update Backend: ${INF}Apply Plan${NC}"
+			if terraform -chdir=$TF_ROOT_DIR apply $PLAN_FILE; then
+				echo -e "${OK}Update Backend${NC}: apply successfull."
+			else
+				echo -e "${ERR}Update Backend${NC}: failed to apply backend."
+				exit_on_error
+			fi
+		fi
 		grep -rl 'backend "azurerm" {}' $TF_ROOT_DIR/*.tf | xargs sed -i 's/backend "azurerm" {}/backend "local" {}/g'
 		echo -e "${OK}Backend${NC}: AZR Remote backend accessible & ready to use."
 		echo "✓ AZR Remote backend accessible & ready to use." >>$STEP_SUM_MD

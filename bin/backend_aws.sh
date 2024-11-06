@@ -93,24 +93,24 @@ backend_config_aws() {
 		echo -e "${OK}Backend${NC}: AWS Remote backend created & ready to use."
 		echo "✓ AWS Remote backend created & ready to use." >>$STEP_SUM_MD
 	else
-    if [[ $UPDATE_BACKEND == true ]]; then
-      if terraform -chdir=$TF_ROOT_DIR plan -out=$PLAN_FILE -input=false 1>>$STDLOG 2>>$ERRLOG; then
-        echo -e "${OK}Update Backend${NC}: Plan successfull."
-        terraform -chdir=$TF_ROOT_DIR show $PLAN_FILE
-      else
-        echo -e "${ERR}Update Backend${NC}: failed to plan backend."
-        			ERROR=true
-        			clean_exit
-      fi
-      echo -e "  Update Backend: ${INF}Apply Plan${NC}"
-      if terraform -chdir=$TF_ROOT_DIR apply $PLAN_FILE; then
-        echo -e "${OK}Update Backend${NC}: apply successfull."
-      else
-        echo -e "${ERR}Update Backend${NC}: failed to apply backend."
-        ERROR=true
-        			clean_exit
-      fi
-    fi
+		if [[ $UPDATE_BACKEND == true ]]; then
+			if terraform -chdir=$TF_ROOT_DIR plan -out=$PLAN_FILE -input=false 1>>$STDLOG 2>>$ERRLOG; then
+				echo -e "${OK}Update Backend${NC}: Plan successfull."
+				terraform -chdir=$TF_ROOT_DIR show $PLAN_FILE
+			else
+				echo -e "${ERR}Update Backend${NC}: failed to plan backend."
+				ERROR=true
+				clean_exit
+			fi
+			echo -e "  Update Backend: ${INF}Apply Plan${NC}"
+			if terraform -chdir=$TF_ROOT_DIR apply $PLAN_FILE; then
+				echo -e "${OK}Update Backend${NC}: apply successfull."
+			else
+				echo -e "${ERR}Update Backend${NC}: failed to apply backend."
+				ERROR=true
+				clean_exit
+			fi
+		fi
 		grep -rl 'backend "s3" {}' $TF_ROOT_DIR/*.tf | xargs sed -i 's/backend "s3" {}/backend "local" {}/g'
 		echo -e "${OK}Backend${NC}: AWS Remote backend accessible & ready to use."
 		echo "✓ AWS Remote backend accessible & ready to use." >>$STEP_SUM_MD

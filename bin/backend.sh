@@ -118,7 +118,7 @@ function autocreate() {
 }
 
 function autopilot() {
-  if [[ -z "$STATE_KEY" ]]; then STATE_KEY="$REPO/$(basename $TF_ROOT_DIR).tfstate"; fi
+	if [[ -z "$STATE_KEY" ]]; then STATE_KEY="$REPO/$(basename $TF_ROOT_DIR).tfstate"; fi
 	echo -e "  ${INF}Autopilot${NC}: Using the following state key: ${INF}$STATE_KEY${NC}"
 	case $CREATE in
 	azr_backend_file) $CREATE ;;
