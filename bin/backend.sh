@@ -15,7 +15,7 @@ function aws_backend_file() {
 region         = "$REGION"
 bucket         = "tfe-tfstate-$REGION-$ID"
 dynamodb_table = "tfe-tfstate-$REGION-$ID.locks"
-key            = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
+key            = "$STATE_KEY"
 encrypt        = true
 EOT
 	else
@@ -40,7 +40,7 @@ function azr_backend_file() {
 resource_group_name  = "tfe-tfstate-$REGION-$ID-rg"
 storage_account_name = "tfestate$ID"
 container_name       = "tfe-tfstate"
-key                  = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
+key                  = "$STATE_KEY"
 EOT
 	echo "✓ Created backend file:" >>$STEP_SUM_MD
 	echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
@@ -48,7 +48,7 @@ EOT
 
 function consul_backend_file() {
 	cat >$TMPDIR/auto.tfbackend <<EOT
-  path = "$REPO/$(basename $TF_ROOT_DIR).tfstate"
+  path = "$STATE_KEY"
 EOT
 	echo "✓ Created backend file:" >>$STEP_SUM_MD
 	echo -e "\`\`\`\n$(cat $TMPDIR/auto.tfbackend)\n\`\`\`\n" >>$STEP_SUM_MD
@@ -118,7 +118,8 @@ function autocreate() {
 }
 
 function autopilot() {
-	echo $CREATE
+	if [[ -z "$STATE_KEY" ]]; then STATE_KEY="$REPO/$(basename $TF_ROOT_DIR).tfstate"; fi
+	echo -e "  ${INF}Autopilot${NC}: Using the following state key: ${INF}$STATE_KEY${NC}"
 	case $CREATE in
 	azr_backend_file) $CREATE ;;
 	aws_backend_file) $CREATE ;;

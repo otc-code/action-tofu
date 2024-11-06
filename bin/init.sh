@@ -34,6 +34,8 @@ function init() {
 			BACKEND_FILE=${parameter##*=}
 			;;
 		region) REGION=${parameter##*=} ;;
+		update_backend) UPDATE_BACKEND=true ;;
+		state_key) STATE_KEY=${parameter##*=} ;;
 		autocreate)
 			echo -e "${OK}AutoCreate${NC}: Will check & create remote backend from given file."
 			PROVIDER=${parameter##*=}
