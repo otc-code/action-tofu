@@ -226,7 +226,7 @@ function gh_annotation() {
 }
 
 git_push() {
-	if [[ ! $GITHUB_EVENT_NAME == "pull_request" ]] && [[ ! $REF == "renovate/*" ]]; then
+  if [[ ! $GITHUB_EVENT_NAME == "pull_request" ]] && [[ ! $REF =~ ^renovate/.* ]]; then
 		MINWAIT=1
 		MAXWAIT=45
 		if [[ "$CI" == "true" ]]; then
