@@ -226,7 +226,7 @@ function gh_annotation() {
 }
 
 git_push() {
-	if [[ ! $GITHUB_EVENT_NAME == "pull_request" ]]; then
+	if [[ ! $GITHUB_EVENT_NAME == "pull_request" ]] && [[ ! $REF == "renovate/*" ]]; then
 		MINWAIT=1
 		MAXWAIT=45
 		if [[ "$CI" == "true" ]]; then
@@ -268,7 +268,7 @@ git_push() {
 			fi
 		fi
 	else
-		echo -e " ${INF}git push${NC}: No commits on PR!"
+		echo -e " ${INF}git push${NC}: No commits on PR or renovate branch!"
 		gh_annotation "warning" "No commits on PR!"
 	fi
 }
